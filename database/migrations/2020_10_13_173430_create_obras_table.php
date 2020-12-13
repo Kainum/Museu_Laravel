@@ -15,6 +15,10 @@ class CreateObrasTable extends Migration
     {
         Schema::create('obras', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nome', 100);
+            $table->string('info', 4000);
+            $table->string('img', 100);
+            $table->date('data_conclusao');
             $table->timestamps();
         });
     }

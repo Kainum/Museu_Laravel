@@ -15,6 +15,10 @@ class CreateArtefatosTable extends Migration
     {
         Schema::create('artefatos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nome', 100);
+            $table->string('info', 4000);
+            $table->string('img', 100);
+            $table->bigInteger('idade');
             $table->timestamps();
         });
     }

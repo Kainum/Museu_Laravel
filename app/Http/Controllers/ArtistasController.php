@@ -10,8 +10,18 @@ use App\Http\Requests\ArtistaRequest;
 class ArtistasController extends Controller
 {
     
-    public function index () {
-        $artistas = Artista::orderBy('nome')->paginate(5);
+    public function index (Request $filtro) {
+        $filtragem = $filtro->get('desc_filtro');
+        if ($filtragem == null) {
+            $artistas = Artista::orderBy('nome')->paginate(10);
+        }
+        else {
+            $artistas = Artista::where('nome', 'like', '%'.$filtragem.'%')
+                            ->orderBy('nome')
+                            ->paginate(10)
+                            ->setpath('artistas?desc_filtro='.$filtragem);
+        }
+
         return view('artistas.index', ['artistas' => $artistas]);
     }
 
@@ -31,8 +41,15 @@ class ArtistasController extends Controller
     //==========================================================
 
     public function destroy($id) {
-        Artista::find($id)->delete();
-        return redirect()->route('artistas');
+        try {
+            Artista::find($id)->delete();
+            $ret = array('status' => 200, 'msg' => "null");
+        } catch (\Illuminate\Database\QueryException $e) {
+            $ret = array('status' => 500, 'msg' => $e->getMessage());
+        } catch (\PDOException $e) {
+            $ret = array('status' => 500, 'msg' => $e->getMessage());
+        }
+        return $ret;
     }
 
     //==========================================================

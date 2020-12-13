@@ -237,8 +237,13 @@ return [
             'icon' => 'fas fa-fw fa-users',
         ],
         [
-            'text' => 'Objetos',
-            'url' => 'objetos',
+            'text' => 'Obras',
+            'url' => 'obras',
+            'icon' => 'fas fa-fw fa-users',
+        ],
+        [
+            'text' => 'Artefatos',
+            'url' => 'artefatos',
             'icon' => 'fas fa-fw fa-users',
         ],
         [

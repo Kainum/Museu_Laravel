@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-    <h3>Novo Artista</h3>
+    <h3>Novo Artefato</h3>
     @if($errors->any())
         <ul class="alert alert-danger">
             @foreach($errors->all() as $error)
@@ -10,7 +10,7 @@
         </ul>
     @endif
     
-    {!! Form::open(['route'=>"artistas.store"]) !!}
+    {!! Form::open(['route'=>"artefatos.store"]) !!}
 
         <div class="form-group">
             {!! Form::label('nome', 'Nome:') !!}
@@ -23,12 +23,25 @@
         </div>
 
         <div class="form-group">
+            {!! Form::label('idade', 'Idade do artefato:') !!}
+            {!! Form::number('idade', '0', ['min' => '0', 'class' => 'text-right form-control', 'required']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('sala_id', 'Sala:') !!}
+            {!! Form::select('sala_id',
+                            \App\Sala::orderBy('sala')->pluck('sala', 'id')->toArray(),
+                            null, ['class'=>'form-control', 'required']) !!}
+            
+        </div>
+
+        <div class="form-group">
             {!! Form::label('img', 'Link da Imagem:') !!}
             {!! Form::text('img', null, ['class'=>'form-control', 'required']) !!}
         </div>
 
         <div class="form-group">
-            {!! Form::submit('Criar Artista', ['class'=>'btn btn-primary']) !!}
+            {!! Form::submit('Criar Artefato', ['class'=>'btn btn-primary']) !!}
             {!! Form::reset('Limpar', ['class'=>'btn btn-default']) !!}
         </div>
 

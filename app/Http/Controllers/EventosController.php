@@ -10,8 +10,18 @@ use App\Http\Requests\EventoRequest;
 class EventosController extends Controller
 {
     
-    public function index () {
-        $eventos = Evento::orderBy('nome_evento')->paginate(5);
+    public function index (Request $filtro) {
+        $filtragem = $filtro->get('desc_filtro');
+        if ($filtragem == null) {
+            $eventos = Evento::orderBy('nome_evento')->paginate(10);
+        }
+        else {
+            $eventos = Evento::where('nome_evento', 'like', '%'.$filtragem.'%')
+                            ->orderBy('nome_evento')
+                            ->paginate(10)
+                            ->setpath('eventos?desc_filtro='.$filtragem);
+        }
+
         return view('eventos.index', ['eventos' => $eventos]);
     }
 
@@ -31,8 +41,15 @@ class EventosController extends Controller
     //==========================================================
 
     public function destroy($id) {
-        Evento::find($id)->delete();
-        return redirect()->route('eventos');
+        try {
+            Evento::find($id)->delete();
+            $ret = array('status' => 200, 'msg' => "null");
+        } catch (\Illuminate\Database\QueryException $e) {
+            $ret = array('status' => 500, 'msg' => $e->getMessage());
+        } catch (\PDOException $e) {
+            $ret = array('status' => 500, 'msg' => $e->getMessage());
+        }
+        return $ret;
     }
 
     //==========================================================

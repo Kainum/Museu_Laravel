@@ -10,8 +10,18 @@ use App\Http\Requests\SalaRequest;
 class SalasController extends Controller
 {
     
-    public function index () {
-        $salas = Sala::orderBy('sala')->paginate(5);
+    public function index (Request $filtro) {
+        $filtragem = $filtro->get('desc_filtro');
+        if ($filtragem == null) {
+            $salas = Sala::orderBy('sala')->paginate(10);
+        }
+        else {
+            $salas = Sala::where('sala', 'like', '%'.$filtragem.'%')
+                            ->orderBy('sala')
+                            ->paginate(10)
+                            ->setpath('salas?desc_filtro='.$filtragem);
+        }
+
         return view('salas.index', ['salas' => $salas]);
     }
 
@@ -31,8 +41,15 @@ class SalasController extends Controller
     //==========================================================
 
     public function destroy($id) {
-        Sala::find($id)->delete();
-        return redirect()->route('salas');
+        try {
+            Sala::find($id)->delete();
+            $ret = array('status' => 200, 'msg' => "null");
+        } catch (\Illuminate\Database\QueryException $e) {
+            $ret = array('status' => 500, 'msg' => $e->getMessage());
+        } catch (\PDOException $e) {
+            $ret = array('status' => 500, 'msg' => $e->getMessage());
+        }
+        return $ret;
     }
 
     //==========================================================

@@ -1,9 +1,9 @@
 @extends('layouts.default')
 
 @section('content')
-    <h1>Artistas</h1>
+    <h1>Obras</h1>
 
-    {!! Form::open(['name'=>'form_name', 'route'=>'artistas']) !!}
+    {!! Form::open(['name'=>'form_name', 'route'=>'obras']) !!}
         <div class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="desc_filtro" style="width:80% !important;" placeholder="Pesquisa...">
@@ -20,27 +20,33 @@
     <table class="table table-strip table-bordered table-hover">
         <thead>
             <th>Nome</th>
+            <th>Artista</th>
+            <th>Ano</th>
+            <th>Sala</th>
             <th>Ações</th>
         </thead>
 
         <tbody>
-            @foreach($artistas as $artista)
+            @foreach($obras as $obra)
                 <tr>
-                    <td>{{ $artista->nome }}</td>
+                    <td>{{ $obra->nome }}</td>
+                    <td>{{ $obra->artista->nome }}</td>
+                    <td>{{ $obra->data_conclusao }}</td>
+                    <td>{{ $obra->sala->sala }}</td>
                     <td>
-                        <a href="{{ route('artistas.edit', ['id'=>$artista->id]) }}" class="btn-sm btn-success">Editar</a>
-                        <a href="#" onclick="return ConfirmaExclusao({{$artista->id}})" class="btn-sm btn-danger">Remover</a>
+                        <a href="{{ route('obras.edit', ['id'=>$obra->id]) }}" class="btn-sm btn-success">Editar</a>
+                        <a href="#" onclick="return ConfirmaExclusao({{$obra->id}})" class="btn-sm btn-danger">Remover</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    {{ $artistas->links() }}
+    {{ $obras->links() }}
 
-    <a href="{{ route('artistas.create', []) }}" class="btn btn-info">Adicionar</a>
+    <a href="{{ route('obras.create', []) }}" class="btn btn-info">Adicionar</a>
 @stop
 
 @section('table-delete')
-"artistas"
+"obras"
 @endsection
