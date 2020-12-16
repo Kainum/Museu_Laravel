@@ -54,8 +54,8 @@ class ArtistasController extends Controller
 
     //==========================================================
 
-    public function edit($id) {
-        $artista = Artista::find($id);
+    public function edit(Request $request) {
+        $artista = Artista::find(\Crypt::decrypt($request->get('id')));
         return view('artistas.edit', compact('artista'));
     }
 

@@ -54,8 +54,8 @@ class ObrasController extends Controller
 
     //==========================================================
 
-    public function edit($id) {
-        $obra = Obra::find($id);
+    public function edit(Request $request) {
+        $obra = Obra::find(\Crypt::decrypt($request->get('id')));
         return view('obras.edit', compact('obra'));
     }
 

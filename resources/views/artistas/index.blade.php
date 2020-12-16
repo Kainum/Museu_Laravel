@@ -28,7 +28,7 @@
                 <tr>
                     <td>{{ $artista->nome }}</td>
                     <td>
-                        <a href="{{ route('artistas.edit', ['id'=>$artista->id]) }}" class="btn-sm btn-success">Editar</a>
+                        <a href="{{ route('artistas.edit', ['id'=>\Crypt::encrypt($artista->id)]) }}" class="btn-sm btn-success">Editar</a>
                         <a href="#" onclick="return ConfirmaExclusao({{$artista->id}})" class="btn-sm btn-danger">Remover</a>
                     </td>
                 </tr>

@@ -54,8 +54,8 @@ class SalasController extends Controller
 
     //==========================================================
 
-    public function edit($id) {
-        $sala = Sala::find($id);
+    public function edit(Request $request) {
+        $sala = Sala::find(\Crypt::decrypt($request->get('id')));
         return view('salas.edit', compact('sala'));
     }
 

@@ -54,8 +54,8 @@ class ArtefatosController extends Controller
 
     //==========================================================
 
-    public function edit($id) {
-        $artefato = Artefato::find($id);
+    public function edit(Request $request) {
+        $artefato = Artefato::find(\Crypt::decrypt($request->get('id')));
         return view('artefatos.edit', compact('artefato'));
     }
 
