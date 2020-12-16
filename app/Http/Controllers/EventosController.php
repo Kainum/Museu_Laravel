@@ -74,7 +74,25 @@ class EventosController extends Controller
     }
 
     public function update(EventoRequest $request, $id) {
-        Evento::find($id)->update($request->all());
+        Evento::find($id)->update([
+            'nome_evento'=>$request->get('nome_evento'),
+            'dt_inicio'=>$request->get('dt_inicio'),
+            'dt_fim'=>$request->get('dt_fim'),
+            'dt_lmt_inscricao'=>$request->get('dt_lmt_inscricao'),
+            'info'=>$request->get('info'),
+        ]);
+
+        // ISSO AQUI É GAMBIARRA; NÃO FAÇAM ISSO EM CASA, CRIANÇAS
+        EventoSala::where('evento_id', '=', $id)->delete();
+
+        $salas = $request->salas;
+        foreach($salas as $s => $value) {
+            EventoSala::create([
+                'evento_id'=>$id,
+                'sala_id'=>$salas[$s],
+            ]);
+        }
+
         return redirect()->route('eventos');
     }
 }
