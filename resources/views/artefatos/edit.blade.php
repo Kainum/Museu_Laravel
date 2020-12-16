@@ -33,7 +33,6 @@
             {!! Form::select('sala_id',
                             \App\Sala::orderBy('sala')->pluck('sala', 'id')->toArray(),
                             $artefato->sala_id, ['class'=>'form-control', 'required']) !!}
-            
         </div>
 
         <div class="form-group">

@@ -32,7 +32,6 @@
             {!! Form::select('sala_id',
                             \App\Sala::orderBy('sala')->pluck('sala', 'id')->toArray(),
                             null, ['class'=>'form-control', 'required']) !!}
-            
         </div>
 
         <div class="form-group">

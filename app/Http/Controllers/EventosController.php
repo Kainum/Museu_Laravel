@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Evento;
+use App\EventoSala;
 use App\Http\Requests\EventoRequest;
 
 class EventosController extends Controller
@@ -31,9 +32,22 @@ class EventosController extends Controller
         return view('eventos.create');
     }
 
-    public function store (EventoRequest $request) {
-        $novo_evento = $request->all();
-        Evento::create($novo_evento);
+    public function store(Request $request) {
+        $evento= Evento::create([
+            'nome_evento'=>$request->get('nome_evento'),
+            'dt_inicio'=>$request->get('dt_inicio'),
+            'dt_fim'=>$request->get('dt_fim'),
+            'dt_lmt_inscricao'=>$request->get('dt_lmt_inscricao'),
+            'info'=>$request->get('info'),
+        ]);
+
+        $salas = $request->salas;
+        foreach($salas as $s => $value) {
+            EventoSala::create([
+                'evento_id'=>$evento->id,
+                'sala_id'=>$salas[$s],
+            ]);
+        }
 
         return redirect()->route('eventos');
     }

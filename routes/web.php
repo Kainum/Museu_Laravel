@@ -28,7 +28,7 @@ Route::group(['middleware'=>'auth'], function () {
     });
 
     Route::group(['prefix'=>'artefatos', 'where'=>['id'=>'[0-9]+']], function() {
-        Route::get('',              ['as'=>'artefatos',            'uses'=>'ArtefatosController@index'    ]);
+        Route::any('',              ['as'=>'artefatos',            'uses'=>'ArtefatosController@index'    ]);
         Route::get('create',        ['as'=>'artefatos.create',     'uses'=>'ArtefatosController@create'   ]);
         Route::get('{id}/destroy',  ['as'=>'artefatos.destroy',    'uses'=>'ArtefatosController@destroy'  ]);
         Route::get('{id}/edit',     ['as'=>'artefatos.edit',       'uses'=>'ArtefatosController@edit'     ]);
@@ -37,7 +37,7 @@ Route::group(['middleware'=>'auth'], function () {
     });
 
     Route::group(['prefix'=>'obras', 'where'=>['id'=>'[0-9]+']], function() {
-        Route::get('',              ['as'=>'obras',            'uses'=>'ObrasController@index'    ]);
+        Route::any('',              ['as'=>'obras',            'uses'=>'ObrasController@index'    ]);
         Route::get('create',        ['as'=>'obras.create',     'uses'=>'ObrasController@create'   ]);
         Route::get('{id}/destroy',  ['as'=>'obras.destroy',    'uses'=>'ObrasController@destroy'  ]);
         Route::get('{id}/edit',     ['as'=>'obras.edit',       'uses'=>'ObrasController@edit'     ]);
@@ -46,7 +46,7 @@ Route::group(['middleware'=>'auth'], function () {
     });
 
     Route::group(['prefix'=>'salas', 'where'=>['id'=>'[0-9]+']], function() {
-        Route::get('',              ['as'=>'salas',            'uses'=>'SalasController@index'    ]);
+        Route::any('',              ['as'=>'salas',            'uses'=>'SalasController@index'    ]);
         Route::get('create',        ['as'=>'salas.create',     'uses'=>'SalasController@create'   ]);
         Route::get('{id}/destroy',  ['as'=>'salas.destroy',    'uses'=>'SalasController@destroy'  ]);
         Route::get('{id}/edit',     ['as'=>'salas.edit',       'uses'=>'SalasController@edit'     ]);
@@ -55,7 +55,7 @@ Route::group(['middleware'=>'auth'], function () {
     });
 
     Route::group(['prefix'=>'eventos', 'where'=>['id'=>'[0-9]+']], function() {
-        Route::get('',              ['as'=>'eventos',            'uses'=>'EventosController@index'    ]);
+        Route::any('',              ['as'=>'eventos',            'uses'=>'EventosController@index'    ]);
         Route::get('create',        ['as'=>'eventos.create',     'uses'=>'EventosController@create'   ]);
         Route::get('{id}/destroy',  ['as'=>'eventos.destroy',    'uses'=>'EventosController@destroy'  ]);
         Route::get('{id}/edit',     ['as'=>'eventos.edit',       'uses'=>'EventosController@edit'     ]);

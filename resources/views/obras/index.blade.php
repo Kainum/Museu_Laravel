@@ -31,7 +31,7 @@
                 <tr>
                     <td>{{ $obra->nome }}</td>
                     <td>{{ $obra->artista->nome }}</td>
-                    <td>{{ $obra->data_conclusao }}</td>
+                    <td>{{ Carbon\Carbon::parse($obra->data_conclusao)->format('Y') }}</td>
                     <td>{{ $obra->sala->sala }}</td>
                     <td>
                         <a href="{{ route('obras.edit', ['id'=>$obra->id]) }}" class="btn-sm btn-success">Editar</a>
