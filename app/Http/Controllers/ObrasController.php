@@ -40,9 +40,9 @@ class ObrasController extends Controller
 
     //==========================================================
 
-    public function destroy($id) {
+    public function destroy(Request $request) {
         try {
-            Obra::find($id)->delete();
+            Obra::find(\Crypt::decrypt($request->get('id')))->delete();
             $ret = array('status' => 200, 'msg' => "null");
         } catch (\Illuminate\Database\QueryException $e) {
             $ret = array('status' => 500, 'msg' => $e->getMessage());
@@ -59,8 +59,8 @@ class ObrasController extends Controller
         return view('obras.edit', compact('obra'));
     }
 
-    public function update(ObraRequest $request, $id) {
-        Obra::find($id)->update($request->all());
+    public function update(ObraRequest $request) {
+        Obra::find(\Crypt::decrypt($request->get('id')))->update($request->all());
         return redirect()->route('obras');
     }
 }

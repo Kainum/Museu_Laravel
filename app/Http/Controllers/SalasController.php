@@ -40,9 +40,9 @@ class SalasController extends Controller
 
     //==========================================================
 
-    public function destroy($id) {
+    public function destroy(Request $request) {
         try {
-            Sala::find($id)->delete();
+            Sala::find(\Crypt::decrypt($request->get('id')))->delete();
             $ret = array('status' => 200, 'msg' => "null");
         } catch (\Illuminate\Database\QueryException $e) {
             $ret = array('status' => 500, 'msg' => $e->getMessage());
@@ -59,8 +59,8 @@ class SalasController extends Controller
         return view('salas.edit', compact('sala'));
     }
 
-    public function update(SalaRequest $request, $id) {
-        Sala::find($id)->update($request->all());
+    public function update(SalaRequest $request) {
+        Sala::find(\Crypt::decrypt($request->get('id')))->update($request->all());
         return redirect()->route('salas');
     }
 }

@@ -40,9 +40,9 @@ class ArtefatosController extends Controller
 
     //==========================================================
 
-    public function destroy($id) {
+    public function destroy(Request $request) {
         try {
-            Artefato::find($id)->delete();
+            Artefato::find(\Crypt::decrypt($request->get('id')))->delete();
             $ret = array('status' => 200, 'msg' => "null");
         } catch (\Illuminate\Database\QueryException $e) {
             $ret = array('status' => 500, 'msg' => $e->getMessage());
@@ -59,8 +59,8 @@ class ArtefatosController extends Controller
         return view('artefatos.edit', compact('artefato'));
     }
 
-    public function update(ArtefatoRequest $request, $id) {
-        Artefato::find($id)->update($request->all());
+    public function update(ArtefatoRequest $request) {
+        Artefato::find(\Crypt::decrypt($request->get('id')))->update($request->all());
         return redirect()->route('artefatos');
     }
 }

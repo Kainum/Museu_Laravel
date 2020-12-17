@@ -32,7 +32,7 @@ class EventosController extends Controller
         return view('eventos.create');
     }
 
-    public function store(Request $request) {
+    public function store(EventoRequest $request) {
         $evento= Evento::create([
             'nome_evento'=>$request->get('nome_evento'),
             'dt_inicio'=>$request->get('dt_inicio'),
@@ -54,9 +54,10 @@ class EventosController extends Controller
 
     //==========================================================
 
-    public function destroy($id) {
+    public function destroy(Request $request) {
         try {
-            Evento::find($id)->delete();
+            EventoSala::where('evento_id', '=', \Crypt::decrypt($request->get('id')))->delete();
+            Evento::find(\Crypt::decrypt($request->get('id')))->delete();
             $ret = array('status' => 200, 'msg' => "null");
         } catch (\Illuminate\Database\QueryException $e) {
             $ret = array('status' => 500, 'msg' => $e->getMessage());
@@ -68,12 +69,13 @@ class EventosController extends Controller
 
     //==========================================================
 
-    public function edit($id) {
-        $evento = Evento::find($id);
+    public function edit(Request $request) {
+        $evento = Evento::find(\Crypt::decrypt($request->get('id')));
         return view('eventos.edit', compact('evento'));
     }
 
-    public function update(EventoRequest $request, $id) {
+    public function update(EventoRequest $request) {
+        $id = \Crypt::decrypt($request->get('id'));
         Evento::find($id)->update([
             'nome_evento'=>$request->get('nome_evento'),
             'dt_inicio'=>$request->get('dt_inicio'),

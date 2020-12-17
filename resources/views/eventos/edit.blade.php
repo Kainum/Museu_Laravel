@@ -11,7 +11,7 @@
         </ul>
     @endif
     
-    {!! Form::open(['route'=> ["eventos.update", 'id'=>$evento->id], 'method'=>'put']) !!}
+    {!! Form::open(['route'=> ["eventos.update", 'id'=>\Crypt::encrypt($evento->id)], 'method'=>'put']) !!}
 
         <div class="form-group">
             {!! Form::label('nome_evento', 'Nome do Evento:') !!}

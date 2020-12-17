@@ -31,7 +31,7 @@
                     <td>{{ $sala->descricao }}</td>
                     <td>
                         <a href="{{ route('salas.edit', ['id'=>\Crypt::encrypt($sala->id)]) }}" class="btn-sm btn-success">Editar</a>
-                        <a href="#" onclick="return ConfirmaExclusao({{$sala->id}})" class="btn-sm btn-danger">Remover</a>
+                        <a href="#" onclick="return ConfirmaExclusao('{{ \Crypt::encrypt($sala->id) }}')" class="btn-sm btn-danger">Remover</a>
                     </td>
                 </tr>
             @endforeach

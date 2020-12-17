@@ -22,8 +22,8 @@
                         @endforeach
                     </td>
                     <td>
-                        <a href="{{ route('eventos.edit', ['id'=>$evento->id]) }}" class="btn-sm btn-success">Editar</a>
-                        <a href="#" onclick="return ConfirmaExclusao({{$evento->id}})" class="btn-sm btn-danger">Remover</a>
+                        <a href="{{ route('eventos.edit', ['id'=>\Crypt::encrypt($evento->id)]) }}" class="btn-sm btn-success">Editar</a>
+                        <a href="#" onclick="return ConfirmaExclusao('{{ \Crypt::encrypt($evento->id) }}')" class="btn-sm btn-danger">Remover</a>
                     </td>
                 </tr>
             @endforeach
@@ -34,5 +34,5 @@
 @stop
 
 @section('table-delete')
-"atores"
+"eventos"
 @endsection

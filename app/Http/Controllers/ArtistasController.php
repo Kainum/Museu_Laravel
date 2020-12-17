@@ -40,9 +40,9 @@ class ArtistasController extends Controller
 
     //==========================================================
 
-    public function destroy($id) {
+    public function destroy(Request $request) {
         try {
-            Artista::find($id)->delete();
+            Artista::find(\Crypt::decrypt($request->get('id')))->delete();
             $ret = array('status' => 200, 'msg' => "null");
         } catch (\Illuminate\Database\QueryException $e) {
             $ret = array('status' => 500, 'msg' => $e->getMessage());
@@ -59,8 +59,8 @@ class ArtistasController extends Controller
         return view('artistas.edit', compact('artista'));
     }
 
-    public function update(ArtistaRequest $request, $id) {
-        Artista::find($id)->update($request->all());
+    public function update(ArtistaRequest $request) {
+        Artista::find(\Crypt::decrypt($request->get('id')))->update($request->all());
         return redirect()->route('artistas');
     }
 }
